@@ -8,8 +8,9 @@ using BingImagesDownloader.Cli.Services;
 var stopwatch = new Stopwatch();
 stopwatch.Start();
 
-var regexOptions = RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase;
-var regex = new Regex(@"^/th\?id=OHR\.(?<ImageFileName>[0-9a-zA-Z_]+)_{1,}(([A-Z]{2}\-[A-Z]{2})|(ROW)){1}[0-9]{10}$", regexOptions, TimeSpan.FromMilliseconds(100));
+const string pattern = @"^/th\?id=OHR\.(?<ImageFileName>[0-9a-zA-Z_]+)_{1,}(([A-Z]{2}\-[A-Z]{2})|(ROW)){1}[0-9]{10}$";
+const RegexOptions regexOptions = RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase;
+var regex = new Regex(pattern, regexOptions, TimeSpan.FromMilliseconds(100));
 
 var fileName = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Bing.db");
 
@@ -27,10 +28,10 @@ var hpImageEntities = db.GetCollection<HPImageEntity>(nameof(HPImageEntity));
 
 var httpClient = new HttpClient();
 
-uint startIndex = 0;
-uint endIndex = 2;
+const uint startIndex = 0;
+const uint endIndex = 10;
 
-for (uint index = startIndex; index < endIndex; index++)
+for (var index = startIndex; index < endIndex; index++)
 {
     var json = string.Empty;
 
@@ -153,4 +154,4 @@ foreach (var job in jobs)
 
 stopwatch.Stop();
 
-Console.WriteLine(string.Format("Done in {0}s at {1}", Convert.ToInt32(stopwatch.Elapsed.TotalSeconds + 0.5), DateTime.Now.ToString("d MMM HH:mm")));
+Console.WriteLine("Done in {0}s at {1:d MMM HH:mm}", Convert.ToInt32(stopwatch.Elapsed.TotalSeconds + 0.5), DateTime.Now);
