@@ -6,10 +6,10 @@ public static class HPImageFactory
 {
     public static IEnumerable<string> GetUrls(uint index = 0)
     {
-        var count = 7;
-        var cultures = CultureInfo.GetCultures(CultureTypes.AllCultures & ~CultureTypes.NeutralCultures);
+        const int count = 7;
+        var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures & ~CultureTypes.NeutralCultures);
 
-        foreach (CultureInfo cultureInfo in cultures)
+        foreach (var cultureInfo in cultureInfos)
         {
             yield return $"https://www.bing.com/HPImageArchive.aspx?format=js&idx={index * count}&n={count}&mkt={cultureInfo.Name}";
         }
