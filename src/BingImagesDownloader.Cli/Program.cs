@@ -29,7 +29,7 @@ var hpImageEntities = db.GetCollection<HPImageEntity>(nameof(HPImageEntity));
 var httpClient = new HttpClient();
 
 const uint startIndex = 0;
-const uint endIndex = 10;
+const uint endIndex = 5;
 
 for (var index = startIndex; index < endIndex; index++)
 {
@@ -50,7 +50,7 @@ for (var index = startIndex; index < endIndex; index++)
 
             foreach (var image in images.Images)
             {
-                if (hpImageEntities.FindOne(ie => ie.Hash == image.Hash) is null)
+                if (hpImageEntities.FindOne(imageEntity => imageEntity.Hash == image.Hash) is null)
                 {
                     hpImageEntities.Insert(new HPImageEntity
                     {
@@ -88,7 +88,7 @@ foreach (var url in urls)
     {
         var name = match.Groups["ImageFileName"].Value;
 
-        var imageEntity = imageEntities.FindOne(e => e.Name == name);
+        var imageEntity = imageEntities.FindOne(imageEntity => imageEntity.Name == name);
 
         if (imageEntity is null)
         {
