@@ -15,9 +15,9 @@ var fileName = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.Use
 
 var parts = new[]
 {
-        new KeyValuePair<string, string>("Filename", fileName),
-        new KeyValuePair<string, string>("Connection", nameof(LiteDB.ConnectionType.Shared)),
-    };
+    new KeyValuePair<string, string>("Filename", fileName),
+    new KeyValuePair<string, string>("Connection", nameof(LiteDB.ConnectionType.Shared)),
+};
 
 var connectionString = string.Join(";", parts.Select(part => $"{part.Key}={part.Value}"));
 
@@ -96,17 +96,19 @@ foreach (var url in urls)
                 Hash = string.Empty,
                 Name = name,
                 Urls = new()
-                    {
-                        url,
-                    },
+                {
+                    url,
+                },
             });
         }
         else
         {
             if (!imageEntity.Urls.Contains(url))
             {
-                var sourceUrls = new List<string>(imageEntity.Urls);
-                sourceUrls.Add(url);
+                var sourceUrls = new List<string>(imageEntity.Urls)
+                {
+                    url
+                };
                 imageEntity.Urls = sourceUrls;
                 imageEntities.Update(imageEntity);
             }
